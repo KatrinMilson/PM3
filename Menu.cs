@@ -23,7 +23,7 @@ namespace PM03
         private void оценкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.l = 1;
-            var item = new AssessmentForm();
+            var item = new WorkForm();
             item.Owner = this;
             item.Show();
         }
@@ -31,7 +31,7 @@ namespace PM03
         private void расписаниеЗанятийToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.l = 2;
-            var item = new ScheduleForm();
+            var item = new WorkForm();
             item.Owner = this;
             item.Show();
         }
@@ -39,7 +39,7 @@ namespace PM03
         private void стедентToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.l = 3;
-            var item = new StudentForm();
+            var item = new WorkForm();
             item.Owner = this;
             item.Show();
         }
@@ -47,28 +47,9 @@ namespace PM03
         private void предметToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.l = 4;
-            var item = new LessonForm();
+            var item = new WorkForm();
             item.Owner = this;
             item.Show();
-        }
-        
-        void refresh()
-        {
-            switch (Properties.Settings.Default.l)
-            {
-                case 1:
-                    MySqlConnection connection = 
-                        new MySqlConnection("server=localhost; port=3306; username=root; password=; database=csharp_users_db;");
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

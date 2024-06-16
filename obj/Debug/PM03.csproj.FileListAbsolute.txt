@@ -51,3 +51,8 @@ C:\Users\satoa\source\repos\PM03\bin\Debug\MetroFramework.Design.dll
 C:\Users\satoa\source\repos\PM03\bin\Debug\MetroFramework.dll
 C:\Users\satoa\source\repos\PM03\bin\Debug\MetroFramework.Fonts.dll
 C:\Users\satoa\source\repos\PM03\obj\Debug\PM03.Menu.resources
+C:\Users\satoa\source\repos\PM03\obj\Debug\PM03.WorkForm.resources
+C:\Users\satoa\source\repos\PM03\obj\Debug\PM03.DBForns.InsertAssessmentForm.resources
+C:\Users\satoa\source\repos\PM03\obj\Debug\PM03.DBForns.InsertLessonForm.resources
+C:\Users\satoa\source\repos\PM03\obj\Debug\PM03.DBForns.ScheduleForm.resources
+C:\Users\satoa\source\repos\PM03\obj\Debug\PM03.DBForns.StudentForm.resources

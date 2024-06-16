@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
+using MySqlX.XDevAPI.Relational;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,10 +13,10 @@ using System.Windows.Forms;
 
 namespace PM03.DBForns
 {
-    public partial class ScheduleForm : MetroFramework.Forms.MetroForm
+    public partial class InsertAssessmentForm : MetroFramework.Forms.MetroForm
     {
-        int id;
-        public ScheduleForm(int id)
+        private int id;
+        public InsertAssessmentForm(int id)
         {
             InitializeComponent();
             this.id = id;
@@ -36,17 +38,17 @@ namespace PM03.DBForns
             MySqlConnection connection = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
             connection.Open();
 
-            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter($"SELECT * FROM `schedule` WHERE `id` = '{id}';", connection);
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter($"SELECT * FROM `assesment` WHERE `id` = '{id}';", connection);
             DataTable table = new DataTable();
             mySqlDataAdapter.Fill(table);
             connection.Close();
 
             dateTimePicker1.Text = table.Rows[0][1].ToString();
-            textBox1.Text = table.Rows[0][2].ToString();
-            textBox2.Text = table.Rows[0][3].ToString();
-            comboBox1.Text = table.Rows[0][4].ToString();
-            textBox3.Text = table.Rows[0][5].ToString();
-            textBox4.Text = table.Rows[0][6].ToString();
+            comboBox1.SelectedValue = table.Rows[0][2];
+            comboBox2.SelectedValue = table.Rows[0][3];
+            textBox1.Text = table.Rows[0][4].ToString();
+            textBox2.Text = table.Rows[0][5].ToString();
+
         }
 
         private void LoadComboBox()
@@ -54,13 +56,34 @@ namespace PM03.DBForns
             MySqlConnection connection = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
             connection.Open();
 
-            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter("SELECT * FROM `lesson` WHERE 1;", connection);
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter("SELECT * FROM `student` WHERE 1;", connection);
             DataTable table = new DataTable();
             mySqlDataAdapter.Fill(table);
             comboBox1.DataSource = table;
-            comboBox1.DisplayMember = "Title";
+            comboBox1.DisplayMember = "FIO";
             comboBox1.ValueMember = "id";
             connection.Close();
+
+            MySqlDataAdapter mySqlDataAdapter2 = new MySqlDataAdapter("SELECT * FROM `lesson` WHERE 1;", connection);
+            DataTable table2 = new DataTable();
+            mySqlDataAdapter2.Fill(table2);
+            comboBox2.DataSource = table2;
+            comboBox2.DisplayMember = "Title";
+            comboBox2.ValueMember = "id";
+            connection.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MySqlConnection connection = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
+            connection.Open();
+
+            string date = dateTimePicker1.Value.ToShortDateString();
+            MySqlDataAdapter mySqlDataAdapter2 = new MySqlDataAdapter($"INSERT INTO `assesment`(`date`, `studentID`, `lessonID`, `Group`, `Description`) VALUES ('{date}','{comboBox1.SelectedValue}','{comboBox2.SelectedValue}','{textBox1.Text}','{textBox2.Text}')", connection);
+            DataTable table = new DataTable();
+            mySqlDataAdapter2.Fill(table);
+            connection.Close();
+            Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -68,8 +91,9 @@ namespace PM03.DBForns
             MySqlConnection connection = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
             connection.Open();
 
+            string date = dateTimePicker1.Value.ToShortDateString();
             MySqlDataAdapter adapter =
-                new MySqlDataAdapter($"DELETE FROM `schedule` WHERE `id` = '{id}'", connection);
+                new MySqlDataAdapter($"UPDATE `assesment` SET `date`='{date}',`studentID`='{comboBox1.SelectedValue}',`lessonID`='{comboBox2.SelectedValue}',`Group`='{textBox1.Text}',`Description`='{textBox2.Text}' WHERE `id` = '{id}'", connection);
             DataTable table = new DataTable();
             adapter.Fill(table);
             connection.Close();
@@ -81,24 +105,10 @@ namespace PM03.DBForns
             MySqlConnection connection = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
             connection.Open();
 
-            string date = dateTimePicker1.Value.ToShortDateString();
             MySqlDataAdapter adapter =
-                new MySqlDataAdapter($"UPDATE `schedule` SET `date`='{date}',`Group`='{textBox1.Text}',`Teacher`='{textBox2.Text}',`lessonID`='{comboBox1.SelectedValue}',`time`='{textBox3.Text}',`classroom`='{textBox4.Text}' WHERE `id` = '{id}'", connection);
+                new MySqlDataAdapter($"DELETE FROM `assesment` WHERE `id` = '{id}'", connection);
             DataTable table = new DataTable();
             adapter.Fill(table);
-            connection.Close();
-            Close();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MySqlConnection connection = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
-            connection.Open();
-
-            string date = dateTimePicker1.Value.ToShortDateString();
-            MySqlDataAdapter mySqlDataAdapter2 = new MySqlDataAdapter($"INSERT INTO `schedule`(`date`, `Group`, `Teacher`, `lessonID`, `time`, `classroom`) VALUES ('{date}','{textBox1.Text}','{textBox2.Text}','{comboBox1.SelectedValue}','{textBox3.Text}','{textBox4.Text}')", connection);
-            DataTable table = new DataTable();
-            mySqlDataAdapter2.Fill(table);
             connection.Close();
             Close();
         }

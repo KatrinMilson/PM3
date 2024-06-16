@@ -114,6 +114,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DB.cs" />
+    <Compile Include="DBForns\InsertAssessmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBForns\InsertAssessmentForm.Designer.cs">
+      <DependentUpon>InsertAssessmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBForns\InsertLessonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBForns\InsertLessonForm.Designer.cs">
+      <DependentUpon>InsertLessonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBForns\ScheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBForns\ScheduleForm.Designer.cs">
+      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBForns\StudentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBForns\StudentForm.Designer.cs">
+      <DependentUpon>StudentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +164,24 @@
     <Compile Include="RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WorkForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorkForm.Designer.cs">
+      <DependentUpon>WorkForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DBForns\InsertAssessmentForm.resx">
+      <DependentUpon>InsertAssessmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBForns\InsertLessonForm.resx">
+      <DependentUpon>InsertLessonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBForns\ScheduleForm.resx">
+      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBForns\StudentForm.resx">
+      <DependentUpon>StudentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,6 +202,9 @@
     </Compile>
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorkForm.resx">
+      <DependentUpon>WorkForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
