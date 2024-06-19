@@ -38,6 +38,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.mySqlCommand1 = new MySqlConnector.MySqlCommand();
             this.mySqlCommand2 = new MySqlConnector.MySqlCommand();
+            this.buttonImport = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // dateTimePicker1
@@ -125,11 +126,23 @@
             this.mySqlCommand2.Transaction = null;
             this.mySqlCommand2.UpdatedRowSource = System.Data.UpdateRowSource.None;
             // 
+            // buttonImport
+            // 
+            this.buttonImport.Location = new System.Drawing.Point(358, 282);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(75, 23);
+            this.buttonImport.TabIndex = 8;
+            this.buttonImport.Text = "Печать";
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Visible = false;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            // 
             // InsertAssessmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonImport);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -157,5 +170,6 @@
         private System.Windows.Forms.Button button1;
         private MySqlConnector.MySqlCommand mySqlCommand1;
         private MySqlConnector.MySqlCommand mySqlCommand2;
+        private System.Windows.Forms.Button buttonImport;
     }
 }

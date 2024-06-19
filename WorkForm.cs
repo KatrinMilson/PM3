@@ -112,5 +112,87 @@ namespace PM03
                     break;
             }
         }
+
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Sort(dataGridView1.Columns[textBoxSort.Text], ListSortDirection.Ascending);
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            switch (Properties.Settings.Default.l)
+            {
+                case 1:
+                    MySqlConnection connection = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
+                    connection.Open();
+
+                    MySqlDataAdapter adaptger = new MySqlDataAdapter
+                        ($"SELECT * FROM `assesment` WHERE `id` LIKE '%{textBoxSearch.Text}%'" +
+                        $" or `date` LIKE '%{textBoxSearch.Text}%'" +
+                        $" or `studentID` LIKE '%{textBoxSearch.Text}%' " +
+                        $"or `lessonID` LIKE '%{textBoxSearch.Text}%' " +
+                        $"OR `Group` Like '%{textBoxSearch.Text}%'" +
+                        $"or `Description` LIKE '%{textBoxSearch.Text}%' ;", connection);
+                    DataTable table = new DataTable();
+                    adaptger.Fill(table);
+                    dataGridView1.DataSource = table;
+                    dataGridView1.Columns[0].Visible = false;
+                    connection.Close();
+                    break;
+                case 2:
+                    MySqlConnection connection2 = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
+                    connection2.Open();
+
+                    MySqlDataAdapter adapter = new MySqlDataAdapter
+                        ($"SELECT * FROM `schedule` WHERE `id` LIKE '%{textBoxSearch.Text}%'" +
+                        $" or `date` LIKE '%{textBoxSearch.Text}%'" +
+                        $" or `Group` LIKE '%{textBoxSearch.Text}%' " +
+                        $"or `Teacher` LIKE '%{textBoxSearch.Text}%' " +
+                        $"OR `lessonID` Like '%{textBoxSearch.Text}%'" +
+                        $"or `time` LIKE '%{textBoxSearch.Text}%'" +
+                        $"or `classroom` LIKE '%{textBoxSearch.Text}%' ;", connection2);
+                    DataTable table2 = new DataTable();
+                    adapter.Fill(table2);
+                    dataGridView1.DataSource = table2;
+                    dataGridView1.Columns[0].Visible = false;
+                    connection2.Close();
+                    break;
+                case 3:
+                    MySqlConnection connection3 = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
+                    connection3.Open();
+
+                    MySqlDataAdapter adapter2 = new MySqlDataAdapter
+                        ($"SELECT * FROM `student` WHERE `id` LIKE '%{textBoxSearch.Text}%'" +
+                        $" or `FIO` LIKE '%{textBoxSearch.Text}%'" +
+                        $" or `Phone` LIKE '%{textBoxSearch.Text}%' " +
+                        $"or `Email` LIKE '%{textBoxSearch.Text}%' " +
+                        $"OR `Address` Like '%{textBoxSearch.Text}%'" +
+                        $"or `Group` LIKE '%{textBoxSearch.Text}%'", connection3);
+                    DataTable table3 = new DataTable();
+                    adapter2.Fill(table3);
+                    dataGridView1.DataSource = table3;
+                    dataGridView1.Columns[0].Visible = false;
+                    connection3.Close();
+                    break;
+                case 4:
+                    MySqlConnection connection4 = new MySqlConnection("server=localhost; port=3306; username=root; password=; database=school;");
+                    connection4.Open();
+                    MySqlDataAdapter adapter3 = new MySqlDataAdapter
+                        ($"SELECT * FROM `lesson` WHERE `id` LIKE '%{textBoxSearch.Text}%'" +
+                        $" or `Title` LIKE '%{textBoxSearch.Text}%'" +
+                        $" or `Code` LIKE '%{textBoxSearch.Text}%' " +
+                        $"or `Teacher` LIKE '%{textBoxSearch.Text}%' " +
+                        $"OR `Group` Like '%{textBoxSearch.Text}%'" +
+                        $"or `Day` LIKE '%{textBoxSearch.Text}%'" +
+                        $"or `Descriotion` LIKE '%{textBoxSearch.Text}%' ;", connection4);
+                    DataTable table4 = new DataTable();
+                    adapter3.Fill(table4);
+                    dataGridView1.DataSource = table4;
+                    dataGridView1.Columns[0].Visible = false;
+                    connection4.Close();
+                    break;
+            }
+        }
     }
 }

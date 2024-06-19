@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Office.Interop.Word;
+using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
 using MySqlX.XDevAPI.Relational;
 using System;
@@ -10,11 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace PM03.DBForns
 {
     public partial class InsertAssessmentForm : MetroFramework.Forms.MetroForm
     {
+        private readonly string pathToWord = @"C:\Users\satoa\OneDrive\Рабочий стол\assessment.docx";
+        private readonly string pathToWord2 = @"C:\Users\satoa\OneDrive\Рабочий стол\assessment1.docx";
         private int id;
         public InsertAssessmentForm(int id)
         {
@@ -29,6 +33,7 @@ namespace PM03.DBForns
             {
                 button2.Visible = true;
                 button3.Visible = true;
+                buttonImport.Visible = true;
                 LoadString();
             }
         }
@@ -39,7 +44,7 @@ namespace PM03.DBForns
             connection.Open();
 
             MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter($"SELECT * FROM `assesment` WHERE `id` = '{id}';", connection);
-            DataTable table = new DataTable();
+            System.Data.DataTable table = new System.Data.DataTable();
             mySqlDataAdapter.Fill(table);
             connection.Close();
 
@@ -57,7 +62,7 @@ namespace PM03.DBForns
             connection.Open();
 
             MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter("SELECT * FROM `student` WHERE 1;", connection);
-            DataTable table = new DataTable();
+            System.Data.DataTable table = new System.Data.DataTable();
             mySqlDataAdapter.Fill(table);
             comboBox1.DataSource = table;
             comboBox1.DisplayMember = "FIO";
@@ -65,7 +70,7 @@ namespace PM03.DBForns
             connection.Close();
 
             MySqlDataAdapter mySqlDataAdapter2 = new MySqlDataAdapter("SELECT * FROM `lesson` WHERE 1;", connection);
-            DataTable table2 = new DataTable();
+            System.Data.DataTable table2 = new System.Data.DataTable();
             mySqlDataAdapter2.Fill(table2);
             comboBox2.DataSource = table2;
             comboBox2.DisplayMember = "Title";
@@ -80,7 +85,7 @@ namespace PM03.DBForns
 
             string date = dateTimePicker1.Value.ToShortDateString();
             MySqlDataAdapter mySqlDataAdapter2 = new MySqlDataAdapter($"INSERT INTO `assesment`(`date`, `studentID`, `lessonID`, `Group`, `Description`) VALUES ('{date}','{comboBox1.SelectedValue}','{comboBox2.SelectedValue}','{textBox1.Text}','{textBox2.Text}')", connection);
-            DataTable table = new DataTable();
+            System.Data.DataTable table = new System.Data.DataTable();
             mySqlDataAdapter2.Fill(table);
             connection.Close();
             Close();
@@ -94,7 +99,7 @@ namespace PM03.DBForns
             string date = dateTimePicker1.Value.ToShortDateString();
             MySqlDataAdapter adapter =
                 new MySqlDataAdapter($"UPDATE `assesment` SET `date`='{date}',`studentID`='{comboBox1.SelectedValue}',`lessonID`='{comboBox2.SelectedValue}',`Group`='{textBox1.Text}',`Description`='{textBox2.Text}' WHERE `id` = '{id}'", connection);
-            DataTable table = new DataTable();
+            System.Data.DataTable table = new System.Data.DataTable();
             adapter.Fill(table);
             connection.Close();
             Close();
@@ -107,10 +112,39 @@ namespace PM03.DBForns
 
             MySqlDataAdapter adapter =
                 new MySqlDataAdapter($"DELETE FROM `assesment` WHERE `id` = '{id}'", connection);
-            DataTable table = new DataTable();
+            System.Data.DataTable table = new System.Data.DataTable();
             adapter.Fill(table);
             connection.Close();
             Close();
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            string date = dateTimePicker1.Text;
+            string studentID = comboBox1.SelectedValue.ToString();
+            string lessonID = comboBox2.SelectedValue.ToString();
+            string Group = textBox1.Text;
+            string Description = textBox2.Text;
+
+            var wordmap = new Word.Application();
+            wordmap.Visible = false;
+            var worddoc = wordmap.Documents.Open(pathToWord);
+
+            ReplaceWord("{date}", date, worddoc);
+            ReplaceWord("{studentID}", studentID, worddoc);
+            ReplaceWord("{lessonID}", lessonID, worddoc);
+            ReplaceWord("{Group}", Group, worddoc);
+            ReplaceWord("{Description}", Description, worddoc);
+
+            worddoc.SaveAs2(pathToWord2);
+            worddoc.Close();
+        }
+
+        private void ReplaceWord(string v, string text, Document worddoc)
+        {
+            var range = worddoc.Content;
+            range.Find.ClearFormatting();
+            range.Find.Execute(FindText: v, ReplaceWith: text);
         }
     }
 }
